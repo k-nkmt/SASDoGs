@@ -20,17 +20,18 @@ project:
     - file: macro.md
     - file: example.ipynb
     - file: build_deploy.ipynb 
+    - file: changelog.md
 # Site options allow you to configure a theme’s behavior.
 # https://mystmd.org/guide/website-templates
 site:
   template: book-theme
   title: SAS Documentation Generator system
   options:
-    # logo: pkg_image.png
+    logo: pkg_logo.png
     logo_text: SASDoGs
     style: style.css
-  # actions:
+  actions:
   #   - title: SASPAC
   #     url: https://github.com/SASPAC
-  #   - title: PharmaForest
-  #     url: https://github.com/PharmaForest
+    - title: PharmaForest
+      url: https://github.com/PharmaForest

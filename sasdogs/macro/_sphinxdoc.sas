@@ -112,7 +112,7 @@ supporting multiple output formats including HTML, PDF, and ePub.
         put "extensions = [";
         put "    'sphinx.ext.githubpages',";
         put "    'sphinx.ext.mathjax',";
-        put "    'myst_parser',";
+        put "    'myst_nb',";
         put "    &exts." ;
         put "]";
         put ' ';
@@ -136,6 +136,7 @@ supporting multiple output formats including HTML, PDF, and ePub.
         put "]";
 
         put "myst_heading_anchors = 3";
+        put 'nb_execution_mode = "off"';
         put ' ';
         put '# -- Options for todo extension ----------------------------------------------';
         put "todo_include_todos = True";

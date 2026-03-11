@@ -2,6 +2,12 @@ MIT License
 
 Copyright (c) 2026 k-nkmt
 
+---
+This package contains code derived from SAS Packages Framework
+https://github.com/yabwon/SAS_PACKAGES by Bartosz Jablonski, which is licensed under the MIT License.  
+
+---
+
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
 in the Software without restriction, including without limitation the rights

@@ -325,8 +325,8 @@ These macros handle metadata extraction and file collection operations.
     
     put "name: Docs (Jupyter Book/Sphinx) GitHub Pages Deploy" ;
     put "on:" ;
-    put "  push:" ;
-    put "    branches: [&branch.]" ;
+    put "  release:" ;
+    put "    types: [published]" ;
     put "  workflow_dispatch:" ;
     put "    inputs:" ;
     put "      builder:" ;
@@ -387,7 +387,7 @@ These macros handle metadata extraction and file collection operations.
     put "        run: npm install -g jupyter-book" ;
     put "      - name: Install Sphinx" ;
     put "        if: steps.detect.outputs.builder == 'sphinx' " ;
-    put "        run: python -m pip install --upgrade pip sphinx myst-parser sphinx-book-theme sphinx-rtd-theme" ;
+    put "        run: python -m pip install --upgrade pip sphinx myst-nb sphinx-book-theme sphinx-rtd-theme" ;
     put "      - name: Build HTML Assets (Jupyter Book)" ;
     put "        if: steps.detect.outputs.builder == 'jupyterbook'" ;
     put "        run: jupyter-book build --html" ;
