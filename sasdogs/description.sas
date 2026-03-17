@@ -1,7 +1,7 @@
 Type: Package
 Package: SASDoGs
 Title: SAS Documentation Generator system
-Version: 0.1
+Version: 0.2
 Author: Ken Nakamatsu (ken-nakamatsu@knworx.com)
 Maintainer: Ken Nakamatsu (ken-nakamatsu@knworx.com)
 License: MIT
