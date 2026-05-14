@@ -1,0 +1,516 @@
+﻿<!--
+Notebook Style Template
+ 
+nbconvert https://github.com/jupyter/nbconvert
+by Jupyter Development Team, Licensed under the Modified BSD License. 
+SAS Theme https://github.com/sassoftware/sas_kernel/tree/master/sas_kernel/theme
+by SAS Software, Licensed under the Apache License, Version2.0
+-->
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+ <meta name="author" content="NA">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SAS Notebook</title>
+ 
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@5.8.1/github-markdown-light.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16/dist/katex.min.css">
+  <style>
+    :root {
+      --page-bg: #f4f6fa;
+      --cell-bg: #ffffff;
+      --border: #d9dfe8;
+      --text: #1f2937;
+      --muted: #6b7280;
+      --prompt-in: #2563eb;
+      --prompt-out: #b91c1c;
+      --input-bg: #f8fafc;
+      --stderr-bg: #b91c1c;
+      --stderr-text: #ffffff;
+      --font-sansserif: "Inter", "Noto Sans", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+      --font-monospace: "JetBrains Mono", "Cascadia Code", "SFMono-Regular", Menlo, Consolas, monospace;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      padding: 18px 12px 28px;
+      background: var(--page-bg);
+      color: var(--text);
+      font-family: var(--font-sansserif) ;
+    }
+    #notebook {
+      max-width: 1100px;
+      margin: 0 auto;
+      overflow: visible;
+      padding: 9ex 11ex 9ex 0;
+      background: var(--cell-bg);
+    }
+    .cell {
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      border: 1px solid transparent;
+      border-radius: 2px;
+      width: 100%;
+      margin: 0 0 8px;
+      padding: 5px;
+      overflow: visible;
+    }
+    .text_cell {
+      display: flex;
+      flex-direction: row;
+      align-items: stretch;
+      margin-bottom: 3px;
+    }
+    .inner_cell {
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      flex: 1;
+    }
+    .prompt {
+      min-width: 14ex;
+      margin: 0;
+      padding: 0.4em;
+      text-align: right;
+      font-family: var(--font-sansserif) ;
+      line-height: 1.21429em;
+      color: var(--muted);
+      user-select: none;
+      cursor: default;
+      font-size: 13px;
+    }
+    .input {
+      display: flex;
+      flex-direction: row;
+      align-items: stretch;
+      page-break-inside: avoid;
+    }
+    .input_prompt {
+      color: var(--prompt-in);
+      border-top: 1px solid transparent;
+    }
+    .input_area {
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      background: var(--input-bg);
+      width: 100%;
+      overflow-x: auto;
+    }
+    .input_area pre,
+    .output_text pre,
+    .text_cell_render pre {
+      margin: 0;
+      padding: 6px 8px;
+      border: 0;
+      border-radius: 0;
+      line-height: 1.35;
+      font-size: 14px;
+      white-space: pre-wrap;
+      word-break: break-word;
+      font-family: var(--font-monospace);
+    }
+    .output_wrapper {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      z-index: 1;
+    }
+    .output { display: flex; flex-direction: column; align-items: stretch; }
+    .output_area {
+      display: flex;
+      flex-direction: row;
+      align-items: stretch;
+      page-break-inside: avoid;
+    }
+    .output_prompt { color: var(--prompt-out); }
+    .output_prompt p {margin: 0;}
+    .outmode-select {
+      margin-top: 6px;
+      width: 84px;
+      padding: 3px 4px;
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      background: #ffffff;
+      color: #1f2937;
+      font-size: 12px;
+    }
+    .output_subarea {
+      overflow-x: auto;
+      padding: 0.4em;
+      flex: 1;
+      max-width: calc(100% - 14ex);
+    }
+    .output_text {
+      text-align: left;
+      color: #111827;
+      line-height: 1.35;
+    }
+    .markdown-body {
+      background: transparent;
+      color: inherit;
+      font-family: inherit;
+    }
+    .markdown-body > :first-child {
+      margin-top: 0;
+    }
+    .markdown-body > :last-child {
+      margin-bottom: 0;
+    }
+    .output_text .markdown-body,
+    .text_cell_render.markdown-body {
+      padding: 0;
+    }
+    .output_stderr {
+      background-color: var(--stderr-bg);
+      border-radius: 3px;
+      padding: 0 6px;
+    }
+    .output_stderr pre { color: var(--stderr-text); }
+    .text_cell_render {
+      width: inherit;
+      border-style: none;
+      outline: none;
+      resize: none;
+      color: #111827;
+      padding: 0.5em 0.5em 0.5em 0.4em;
+      line-height: 1.55;
+    }
+    .cm-s-default span.cm-comment { color: #008000; font-style: italic; }
+    .cm-s-default span.cm-atom { color: #fb0120; }
+    .cm-s-default span.cm-number { color: #164; }
+    .cm-s-default span.cm-property,
+    .cm-s-default span.cm-attribute { color: #a1c659; }
+    .cm-s-default span.cm-keyword,
+    .cm-s-default span.cm-def { color: #00f; }
+    .cm-s-default span.cm-string { color: #800080; }
+    .cm-s-default span.cm-operator,
+    .cm-s-default span.cm-bracket,
+    .cm-s-default span.cm-variable { color: #505050; }
+    .cm-s-default span.cm-variable-2,
+    .cm-s-default span.cm-builtin { color: #000080; font-weight: bold; }
+    .cm-s-default span.cm-error { background: #fb0120; color: #b0b0b0; }
+    .cm-s-default span.cm-tag,
+    .cm-s-default span.cm-meta { color: #fb0120; }
+    .cm-s-default span.cm-link { color: #d381c3; }
+   /* Custom Style */  
+  </style>
+</head>
+ 
+<body>
+  <div id="notebook">
+    <div class="container" id="notebook-container">
+      <template v-for="(cell, idx) in cells" :key="cell.id || idx">
+        <div class="cell text_cell rendered" v-if="cell.cell_type === 'markdown'">
+          <div class="prompt input_prompt"></div>
+          <div class="inner_cell">
+            <div class="text_cell_render rendered_html markdown-body" v-html="renderMarkdown(normalize(cell.source))"></div>
+          </div>
+        </div>
+ 
+        <div class="cell code_cell rendered" v-else-if="cell.cell_type === 'code'">
+          <div class="input">
+            <div class="prompt input_prompt">In [{{ displayCount(cell.execution_count) }}]:</div>
+            <div class="inner_cell">
+              <div class="input_area">
+                <pre class="code cm-s-default" data-lang="sas" :data-source="normalize(cell.source)"></pre>
+              </div>
+            </div>
+          </div>
+ 
+          <div class="output_wrapper" v-if="hasResult(cell) || hasLog(cell)">
+            <div class="output">
+              <div class="output_area">
+                <div class="prompt output_prompt">
+                  <p>Out[{{ displayCount(cell.execution_count) }}]:</p>
+                  <select class="outmode-select"
+                          v-if="hasResult(cell) && hasLog(cell)"
+                          v-model="outmode[cellKey(cell, idx)]">
+                    <option value="result">result</option>
+                    <option value="log">log</option>
+                  </select>
+                </div>
+ 
+                <div class="output_text output_subarea" v-if="currentMode(cell, idx) === 'result'">
+                  <div class="markdown-body" v-if="resultPayload(cell).html" v-html="resultPayload(cell).html"></div>
+                  <pre v-else>{{ resultPayload(cell).text }}</pre>
+                </div>
+ 
+                <div class="output_text output_subarea" v-else>
+                  <pre>{{ normalize(cell.log) }}</pre>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </template>
+    </div>
+  </div>
+ 
+  <script src="https://cdn.jsdelivr.net/npm/vue@3/dist/vue.global.prod.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/codemirror@5/lib/codemirror.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/codemirror@5/mode/sas/sas.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/codemirror@5/addon/runmode/runmode.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/marked@15/marked.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16/dist/contrib/auto-render.min.js"></script>
+ 
+   <script id="notebook-data" type="application/json">
+{
+  "cells": [
+{   "cell_type": "markdown",   "id": "cedfffaf-f60d-414d-9e5a-87196e0aaebc",   "metadata": {},   "source": [
+"# Notebook Sample\n",
+"\n",
+"This sample demonstrates notebook-style documentation inspired by R Markdown, Jupyter Notebook, and nbconvert.  \n",
+"It can generate `.ipynb`, `.html`, and `.md` outputs from a SAS program that remains\n",
+"directly executable as a standard SAS source file.  \n",
+"It also supports notebook-style options such as `eval` and `include`, as well as\n",
+"macro expansion inside markdown cells.\n",
+"\n",
+"## Header\n",
+"The header section stores notebook-level settings such as title and author.  \n",
+"The header start pattern (default: `/*** HEADER START ***//*`) must appear within the first three lines.  \n",
+"In practice it is usually placed at the top of the file, but an exclusion marker can still appear before it.  \n",
+"This sample lists the default header options below.  \n",
+"\n",
+"- **title**: Notebook title used in generated outputs\n",
+"- **author**: Notebook author written to metadata\n",
+"- **eval**: Default execution setting for code cells\n",
+"- **include**: Default inclusion setting for cells in generated outputs\n",
+"- **expand**: Default macro expansion setting for markdown cells\n",
+"- **sansserif**: Sans-serif font stack for HTML output\n",
+"- **monospace**: Monospace font stack for HTML output\n",
+"- **odsstyle**: ODS style used for HTML result rendering\n",
+"- **style_ref**: Optional fileref for custom CSS appended to the HTML output\n",
+"\n",
+"## Cells\n",
+"Markdown cells are defined by block comments wrapped by specific markers"
+   ]   } ,
+{   "cell_type": "markdown",   "id": "59289c17-2115-6a4c-8489-1029e85cd2a3",   "metadata": {},   "source": [
+"All other content is treated as a code cell.  \n",
+"Global defaults are defined in the header, but cell-level options can override them.  \n",
+"Markdown cell options are written on the markdown start marker, and code cell options\n",
+"are written on the first line of the code cell using the option marker pattern.  \n",
+""
+   ]   } ,
+  {    "cell_type": "code",    "execution_count": 1,    "id": "7edd2c92-8164-ac49-a0b3-c397e5789f79",    "metadata": {},    "outputs": [         {      "data": {       "text/html": [
+"<div style=\"padding-bottom: 8px; padding-top: 1px\">\n",
+"<div id=\"IDX\" style=\"padding-bottom: 8px; padding-top: 1px\">\n",
+"<table class=\"table\" style=\"border-spacing: 0\" aria-label=\"データセット SASHELP.CLASS\">\n",
+"<caption aria-label=\"データセット SASHELP.CLASS\"></caption>\n",
+"<colgroup><col/></colgroup><colgroup><col/></colgroup>\n",
+"<thead>\n",
+"<tr>\n",
+"<th class=\"r header\" scope=\"col\">OBS</th>\n",
+"<th class=\"header\" scope=\"col\">Name</th>\n",
+"</tr>\n",
+"</thead>\n",
+"<tbody>\n",
+"<tr>\n",
+"<th class=\"r rowheader\" scope=\"row\">1</th>\n",
+"<td class=\"data\">Alfred</td>\n",
+"</tr>\n",
+"<tr>\n",
+"<th class=\"r rowheader\" scope=\"row\">2</th>\n",
+"<td class=\"data\">Alice</td>\n",
+"</tr>\n",
+"<tr>\n",
+"<th class=\"r rowheader\" scope=\"row\">3</th>\n",
+"<td class=\"data\">Barbara</td>\n",
+"</tr>\n",
+"<tr>\n",
+"<th class=\"r rowheader\" scope=\"row\">4</th>\n",
+"<td class=\"data\">Carol</td>\n",
+"</tr>\n",
+"<tr>\n",
+"<th class=\"r rowheader\" scope=\"row\">5</th>\n",
+"<td class=\"data\">Henry</td>\n",
+"</tr>\n",
+"</tbody>\n",
+"</table>\n",
+"</div>\n",
+"</div>\n",
+""
+        ],       "text/plain": [         "<IPython.core.display.HTML object>"     ]     },      "metadata": {},      "output_type": "display_data"     }    ],    "log": [
+"\n",
+"NOTE: データセットSASHELP.CLASSから5オブザベーションを読み込みました。\n",
+"NOTE: PROCEDURE PRINT処理(合計処理時間):\n",
+"      処理時間           0.01 秒\n",
+"      ユーザーCPU時間    0.01 秒\n",
+"      システムCPU時間    0.00 秒\n",
+"      メモリ             1492.65k\n",
+"      OSメモリ           28312.00k\n",
+"      タイムスタンプ     2026/05/14 午後10:30:09\n",
+"      ステップ数                        46  スイッチ数  0\n",
+"      ページフォルト回数                0\n",
+"      ページリクレーム回数              406\n",
+"      ページスワップ回数                0\n",
+"      自発的コンテキストスイッチ回数    0\n",
+"      非自発的コンテキストスイッチ回数  0\n",
+"      ブロック入力操作回数              0\n",
+"      ブロック出力操作回数              0\n",
+"\n",
+""
+    ],    "source": [
+"proc print data=sashelp.class(obs=5);\n",
+"  var name ;\n",
+"run;\n",
+""
+  ]  } ,
+{   "cell_type": "markdown",   "id": "b3bbd9fc-ec61-a142-aa3b-97e1d59dbdb5",   "metadata": {},   "source": [
+"## Using Macros Inside Markdown Cells\n",
+"Macro expansion is enabled by default.  \n",
+"To allow `%` and `&` to expand inside markdown cells, prefix them with `$`.  \n",
+"```\n",
+"&test1. is not expanded.  \n",
+"&test2. is expanded.  \n",
+"\n",
+"hello world from macro.  \n",
+"```\n",
+"Only code that has already run before the current markdown cell can contribute macro values.  \n",
+"Macros defined later in the file are not available yet.  \n",
+"To disable expansion explicitly, set `expand=N`.  \n",
+"\n",
+"## Code Execution\n",
+"Code cell execution is enabled by default.  \n",
+"Because this feature uses `ods` and `proc printto`, it may interfere with code that manages\n",
+"those destinations directly. In such cases, set `eval=N`.  \n",
+"The code cell itself is still included in output, but it is not executed, so no result is captured.  "
+   ]   } ,
+  {    "cell_type": "code",    "execution_count": null,    "id": "507a3197-8c1a-cc4e-ba5f-a479fe7b8305",    "metadata": {},    "outputs": [         {      "data": {       "text/html": [
+""
+        ],       "text/plain": [        ""     ]     },      "metadata": {},      "output_type": "display_data"     }    ],    "log": [
+""
+    ],    "source": [
+"/* Not executed */\n",
+"proc print data=sashelp.class(obs=5);\n",
+"run;\n",
+"\n",
+"data _null_ ;\n",
+"  a = \"text\\aa\" ;\n",
+"run ;\n",
+""
+  ]  } ,
+{   "cell_type": "markdown",   "id": "e7fb67a6-3946-294a-b4d5-f1a54c22bfcf",   "metadata": {},   "source": [
+"## YAML Header In Markdown Output\n",
+"When generating markdown output, header entries other than notebook control settings\n",
+"are emitted as-is into the YAML front matter.  \n",
+"\n",
+"## Customizing HTML Output\n",
+"You can customize the font stacks through `sansserif` and `monospace`.  \n",
+"If you need stronger support for non-English text, explicitly selecting fonts is recommended.  \n",
+"\n",
+"For more detailed styling, use `style_ref` to point to a fileref whose contents are appended\n",
+"as custom CSS in the generated HTML output.  \n",
+""
+   ]   } ,
+{   "cell_type": "markdown",   "id": "e7fb67a6-3946-294a-b4d5-f1a54c22bfcf",   "metadata": {},   "source": [
+
+   ]   }
+  ]
+}
+  </script>
+ 
+  <script>
+    (function () {
+      function parseNotebookData() {
+        var dataNode = document.getElementById("notebook-data");
+        try {
+          return JSON.parse(dataNode.textContent || "{}");
+        } catch (e) {
+          return {
+            cells: [{
+              cell_type: "markdown",
+              source: ["# Invalid notebook-data\n", "JSON parse error: " + e.message]
+            }]
+          };
+        }
+      }
+ 
+      var notebook = parseNotebookData();
+      Vue.createApp({
+        data: function () {
+          return {
+            cells: Array.isArray(notebook.cells) ? notebook.cells : [],
+            outmode: {}
+          };
+        },
+        methods: {
+          normalize: function (value) {
+            var text = Array.isArray(value) ? value.join("") : (value == null ? "" : String(value));
+            return text;
+          },
+          displayCount: function (count) {
+            return typeof count === "number" ? count : " ";
+          },
+          renderMarkdown: function (text) {
+            return (window.marked && typeof window.marked.parse === "function") ? window.marked.parse(text) : text;
+          },
+          cellKey: function (cell, idx) {
+            return (cell && cell.id) ? String(cell.id) : String(idx);
+          },
+          hasLog: function (cell) {
+            return this.normalize(cell && cell.log).length > 0;
+          },
+          resultPayload: function (cell) {
+            var outputs = Array.isArray(cell && cell.outputs) ? cell.outputs : [];
+            var item = outputs.find(function (x) {
+              return x && x.output_type === "display_data";
+            });
+            if (!item) {
+              return { html: "", text: "" };
+            }
+            var data = item.data || {};
+            var html = this.normalize(data["text/html"]);
+            if (html) {
+              return { html: html, text: "" };
+            }
+            return { html: "", text: this.normalize(data["text/plain"]) };
+          },
+          hasResult: function (cell) {
+            var r = this.resultPayload(cell);
+            return !!(r.html || r.text);
+          },
+          currentMode: function (cell, idx) {
+            var key = this.cellKey(cell, idx);
+            if (!this.outmode[key]) {
+              this.outmode[key] = this.hasResult(cell) ? "result" : "log";
+            }
+            return this.outmode[key];
+          },
+          colorizeAndMath: function () {
+            document.querySelectorAll("pre.code[data-source]").forEach(function (el) {
+              var src = el.getAttribute("data-source") || "";
+              el.textContent = "";
+              if (window.CodeMirror && typeof window.CodeMirror.runMode === "function") {
+                window.CodeMirror.runMode(src, "sas", el);
+              } else {
+                el.textContent = src;
+              }
+            });
+            if (typeof renderMathInElement === "function") {
+              renderMathInElement(document.getElementById("notebook-container"), {
+                delimiters: [
+                  { left: "$$", right: "$$", display: true },
+                  { left: "$", right: "$", display: false }
+                ],
+                throwOnError: false
+              });
+            }
+          }
+        },
+        mounted: function () {
+          this.$nextTick(this.colorizeAndMath);
+        },
+        updated: function () {
+          this.$nextTick(this.colorizeAndMath);
+        }
+      }).mount("#notebook");
+    })();
+  </script>
+</body>
+</html>
